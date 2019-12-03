@@ -15,7 +15,7 @@ class AmountReaderSpec  extends  Specification{
 
         where:
         input                           ||              output
-        "1.00 Â¥"                        ||              "one yen"
+        "1.00 ¥"                        ||              "one yen"
         "1.00 \$"                       ||              "one dollar"
         "2.00 \$"                       ||              "two dollars"
         "3.00 \$"                       ||              "three dollars"
