@@ -14,10 +14,19 @@ public class Graph {
 		this.adjacencyMatrix = new int[nodes.size()][nodes.size()];
 	}
 	
+	public Node getNodeByIndex(int index) {
+		return nodes.get(index);
+	}
+	
 	public void addAdjacency(int index1, int index2) {
 		//For now, this is bidirectional tree
 		adjacencyMatrix[index1][index2] = 1;
 		adjacencyMatrix[index2][index1] = 1;
+	}
+	
+	public boolean isAdjacent(int index1, int index2) {
+		//For now, this is bidirectional tree
+		return adjacencyMatrix[index1][index2] == 1;
 	}
 	public String render() {
 		StringBuilder result = new StringBuilder();
@@ -38,7 +47,9 @@ public class Graph {
 	}
 	
 	
-	
+	public int size() {
+		return this.nodes.size();
+	}
 	
 	
 }
