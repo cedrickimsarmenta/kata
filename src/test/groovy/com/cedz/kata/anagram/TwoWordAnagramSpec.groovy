@@ -1,7 +1,7 @@
 package com.cedz.kata.anagram;
 
 import com.cedz.kata.calculator.Calculator
-
+import org.junit.Ignore
 import spock.lang.Specification
 import spock.lang.Unroll
 
@@ -10,12 +10,12 @@ public class TwoWordAnagramSpec extends Specification{
 	@Unroll
 	def "test anagram" () {
 		expect:
-		twoWordAnagram.anagrams(input).containsAll(result);
-//		result == twoWordAnagram.anagrams(input).containsAll(result);
-		
+		def actual = twoWordAnagram.anagrams(input)
+		actual.containsAll(result);
+
 		where:
 		input                           ||  result
-		"documenting"                   ||  ["encoding mut"]
+		"catdog"                        ||  ["cat dog"]
 
 	}
 

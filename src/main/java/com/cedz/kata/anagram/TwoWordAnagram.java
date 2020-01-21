@@ -1,5 +1,6 @@
 package com.cedz.kata.anagram;
 
+import java.nio.ReadOnlyBufferException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -7,23 +8,21 @@ import java.util.List;
 import java.util.Set;
 
 public class TwoWordAnagram {
-	private static final Integer MIN_LENGTH = 2;
+	private static final Integer MIN_LENGTH = 3;
 	static {
 		Dictionary.getInstance();
 	}
 	
 	public Set<String> anagrams(String word) {
 		Dictionary dictionary = Dictionary.getInstance();
-		
-		
 		Set<String> result = new HashSet<>();
 
 		int i = MIN_LENGTH;
 
-		while (i <= word.length() - i ) {
+		while (i <= (word.length() / 2)) {
 			System.out.println("Checking anagrams");
 			Set<String> iLengthAnagrams = new HashSet<String>();
-			anagrams(word, i, iLengthAnagrams);
+			Anagram.anagrams(word, word.length()-i, iLengthAnagrams);
 			
 			for(String firstWord : iLengthAnagrams) {
 				if(dictionary.contains(firstWord)) {
@@ -31,9 +30,9 @@ public class TwoWordAnagram {
 					String remainingWord = removeSequence(word, firstWord);
 					
 					Set<String> jLengthAnagrams = new HashSet<String>();
-				
-				
-					anagrams(remainingWord, remainingWord.length(), jLengthAnagrams);
+
+
+					Anagram.anagrams(remainingWord, remainingWord.length(), jLengthAnagrams);
 
 					for(String secondWord : jLengthAnagrams) {
 						if(dictionary.contains(secondWord)) {
@@ -62,9 +61,13 @@ public class TwoWordAnagram {
 		return remainingWord;
 				
 	}
-	private void anagrams(String word, int length, Set<String> anagrams) {
-	
-	}
+
+
+
+
+
+
+
 	private String formatWords(String word1, String word2) {
 		
 		if(word1.compareTo(word2) < 0) {
