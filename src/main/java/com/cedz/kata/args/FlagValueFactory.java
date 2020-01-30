@@ -14,6 +14,8 @@ public class FlagValueFactory {
       IntegerFlagValue value = new IntegerFlagValue();
       value.setValue(8080);
       return value;
+    }else if (type == FlagType.STRING_LIST) {
+      return  new StringListFlagValue();
     }
     return null;
   }

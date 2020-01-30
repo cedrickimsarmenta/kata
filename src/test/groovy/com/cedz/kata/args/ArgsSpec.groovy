@@ -22,10 +22,7 @@ class ArgsSpec extends  Specification{
     "-x /api -s"        | [saltFlag(), serverPrefix()]     ||  [(saltFlag()) : createBooleanFlagValue(true), (serverPrefix()) : createStringFlagValue("/api")]
     ""                  | [saltFlag(), serverPrefix()]     ||  [(saltFlag()) : createBooleanFlagValue(false), (serverPrefix()) : createStringFlagValue(null)]
     "-p 8000"           | [portFlag()]                     ||  [(portFlag()) : createIntegerFlagValue(8000)]
-
-
-
-
+    "-o FOOT,BASK,BADM" | [sportPrefix()]                  ||  [(sportPrefix()) : createListStringValue(["FOOT", "BASK","BADM"])]
   }
   def createBooleanFlagValue(boolean value) {
     BooleanFlagValue booleanValue =  new BooleanFlagValue()
@@ -37,6 +34,13 @@ class ArgsSpec extends  Specification{
   def createStringFlagValue(String value) {
     StringFlagValue flagValue =  new StringFlagValue()
     flagValue.setValue(value)
+
+    flagValue
+  }
+
+  def createListStringValue(def list) {
+    StringListFlagValue  flagValue =  new StringListFlagValue()
+    flagValue.setValue(list)
 
     flagValue
   }
@@ -55,6 +59,11 @@ class ArgsSpec extends  Specification{
 
   private FlagSchema serverPrefix() {
     return new FlagSchema(FlagType.STRING, "serverPrefix" , "x")
+  }
+
+
+  private FlagSchema sportPrefix() {
+    return new FlagSchema(FlagType.STRING_LIST, "sports" , "o")
   }
 
   private FlagSchema portFlag() {
