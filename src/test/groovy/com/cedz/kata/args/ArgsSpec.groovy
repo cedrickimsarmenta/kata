@@ -17,10 +17,13 @@ class ArgsSpec extends  Specification{
     input               | schemaList                       ||  result
     "-s"                | [saltFlag()]                     ||  [(saltFlag()) : createBooleanFlagValue(true)]
     "-s false"          | [saltFlag()]                     ||  [(saltFlag()) : createBooleanFlagValue(false)]
-    "-s true"           | [saltFlag()]                    ||  [(saltFlag()) : createBooleanFlagValue(true)]
+    "-s true"           | [saltFlag()]                     ||  [(saltFlag()) : createBooleanFlagValue(true)]
     ""                  | [saltFlag()]                     ||  [(saltFlag()) : createBooleanFlagValue(false)]
     "-x /api -s"        | [saltFlag(), serverPrefix()]     ||  [(saltFlag()) : createBooleanFlagValue(true), (serverPrefix()) : createStringFlagValue("/api")]
     ""                  | [saltFlag(), serverPrefix()]     ||  [(saltFlag()) : createBooleanFlagValue(false), (serverPrefix()) : createStringFlagValue(null)]
+    "-p 8000"           | [portFlag()]                     ||  [(portFlag()) : createIntegerFlagValue(8000)]
+
+
 
 
   }
@@ -37,6 +40,14 @@ class ArgsSpec extends  Specification{
 
     flagValue
   }
+
+  def createIntegerFlagValue(Integer value) {
+    IntegerFlagValue flagValue =  new IntegerFlagValue()
+    flagValue.setValue(value)
+
+    flagValue
+  }
+
   private FlagSchema saltFlag() {
     return new FlagSchema(FlagType.BOOLEAN, "useSalt" , "s")
   }
@@ -46,4 +57,7 @@ class ArgsSpec extends  Specification{
     return new FlagSchema(FlagType.STRING, "serverPrefix" , "x")
   }
 
+  private FlagSchema portFlag() {
+    return new FlagSchema(FlagType.INTEGER, "port" , "p")
+  }
 }

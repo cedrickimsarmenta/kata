@@ -10,6 +10,10 @@ public class FlagValueFactory {
       BooleanFlagValue value  = new BooleanFlagValue();
       value.setValue(false);
       return value;
+    } else if (type == FlagType.INTEGER) {
+      IntegerFlagValue value = new IntegerFlagValue();
+      value.setValue(8080);
+      return value;
     }
     return null;
   }
