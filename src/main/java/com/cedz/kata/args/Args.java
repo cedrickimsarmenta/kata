@@ -1,6 +1,5 @@
 package com.cedz.kata.args;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -19,47 +18,49 @@ public class Args {
     }
   }
 
-  public List<FlagValue> parse(String input) {
-    Map<String, FlagValue> resultMap = new HashMap<>();
+  public Map<FlagSchema, FlagValue> parse(String input) {
+    Map<FlagSchema, FlagValue> resultMap = new HashMap<>();
+    setDefaults(resultMap);
 
     List<String> tokens = Arrays.asList(input.split(SPACE));
-    FlagSchema capturedFlag = null;
+    FlagSchema previous = null;
     for(String token : tokens) {
       if(token.startsWith(DASH)) {
-        String prefix = token.substring(1);
-        FlagSchema schemaItem = schema.get(prefix);
-
-        if(schemaItem.getFlagType() == FlagType.BOOLEAN) {
-          BooleanFlagValue flagValue = new BooleanFlagValue(schemaItem);
-          flagValue.setValue(true);
-          resultMap.put(schemaItem.getPrefix(), flagValue);
-        } else if (schemaItem.getFlagType() == FlagType.STRING)  {
-          capturedFlag = schemaItem;
-        }
+        previous = handleFlag(resultMap, token);
       } else {
-        if (capturedFlag != null && capturedFlag.getFlagType() == FlagType.STRING) {
-          StringFlagValue flagValue = new StringFlagValue(capturedFlag);
-          flagValue.setValue(token);
-          resultMap.put(capturedFlag.getPrefix(), flagValue);
-          capturedFlag = null;
-        }
+        handleValue(resultMap, previous, token);
+        previous = null;
       }
     }
+    return resultMap;
+  }
 
-    //Default values
+  private void handleValue(Map<FlagSchema, FlagValue> resultMap, FlagSchema previous, String token) {
+    if (previous != null) {
+      resultMap.get(previous).parseArgument(token);
+      previous = null;
+    }
+  }
+
+  private FlagSchema handleFlag(Map<FlagSchema, FlagValue> resultMap, String token) {
+    String prefix = token.substring(1);
+    FlagSchema schemaItem = schema.get(prefix);
+    FlagValue flagValue = resultMap.get(schemaItem);
+
+    if(flagValue.getFlagType() == FlagType.BOOLEAN) {
+      //TODO: Only special handling is boolean. Dont add interface method for now
+      flagValue.setValue(true);
+    }
+    //Remember the item
+    return schemaItem;
+  }
+
+  private void setDefaults(Map<FlagSchema, FlagValue> resultMap) {
     for(FlagSchema schemaItem : schema.values()) {
       if(!resultMap.containsKey(schemaItem.getPrefix())) {
-        if(schemaItem.getFlagType() == FlagType.BOOLEAN) {
-          BooleanFlagValue flagValue = new BooleanFlagValue(schemaItem);
-          flagValue.setValue(false);
-          resultMap.put(schemaItem.getPrefix(), flagValue);
-        }else if (schemaItem.getFlagType() == FlagType.STRING)  {
-          StringFlagValue flagValue = new StringFlagValue(schemaItem);
-          resultMap.put(schemaItem.getPrefix(), flagValue);
-        }
+        FlagValue flagValue = FlagValueFactory.createDefaultValueForType(schemaItem.getFlagType());
+        resultMap.put(schemaItem, flagValue);
       }
     }
-
-    return new ArrayList<>(resultMap.values());
   }
 }

@@ -4,10 +4,10 @@ import java.util.Objects;
 
 public abstract  class AbstractFlagValue <T>  implements  FlagValue<T> {
   private T value;
-  private  FlagSchema schema;
+  private  FlagType flagType;
 
-  protected AbstractFlagValue(FlagSchema schema) {
-    this.schema = schema;
+  protected AbstractFlagValue(FlagType flagType) {
+    this.flagType = flagType;
   }
 
   @Override
@@ -21,9 +21,19 @@ public abstract  class AbstractFlagValue <T>  implements  FlagValue<T> {
   }
 
   @Override
-  public FlagSchema getFlagSchema() {
-    return schema;
+  public FlagType getFlagType() {
+    return flagType;
   }
+
+
+  @Override
+  public String toString() {
+    return "AbstractFlagValue{" +
+        "value=" + value +
+        ", schema=" + flagType +
+        '}';
+  }
+
 
   @Override
   public boolean equals(Object o) {
@@ -31,19 +41,11 @@ public abstract  class AbstractFlagValue <T>  implements  FlagValue<T> {
     if (o == null || getClass() != o.getClass()) return false;
     AbstractFlagValue<?> that = (AbstractFlagValue<?>) o;
     return Objects.equals(value, that.value) &&
-        Objects.equals(schema, that.schema);
+        flagType == that.flagType;
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value, schema);
-  }
-
-  @Override
-  public String toString() {
-    return "AbstractFlagValue{" +
-        "value=" + value +
-        ", schema=" + schema +
-        '}';
+    return Objects.hash(value, flagType);
   }
 }

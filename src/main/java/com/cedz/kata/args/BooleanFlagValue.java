@@ -4,7 +4,13 @@ import java.util.Objects;
 
 public class BooleanFlagValue extends  AbstractFlagValue<Boolean> {
 
-  protected BooleanFlagValue(FlagSchema schema) {
-    super(schema);
+  protected BooleanFlagValue() {
+    super(FlagType.BOOLEAN);
+  }
+
+  @Override
+  public void parseArgument(String argument) {
+    Boolean b = Boolean.valueOf(argument);
+    this.setValue(b);
   }
 }
