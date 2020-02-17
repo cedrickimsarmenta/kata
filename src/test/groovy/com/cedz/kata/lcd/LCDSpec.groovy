@@ -9,22 +9,22 @@ class LCDSpec extends  Specification{
   def "givenNumber_whenPrintLCD_thenShouldPrintCorrectly" () {
 
     expect:
-    expectedResult == LCD.toLCD(number);
+    expectedResult == LCD.toLCD(number,width, height);
 
     where:
-    number || expectedResult
-    1      || one()
-    11     || eleven()
-    2      || two()
-    12     || twelve()
-    3      || three()
-    4      || four()
-    5      || five()
-    6      || six()
-    7      || seven()
-    8      || eight()
-    9      || nine()
-    0      || zero()
+    number | width   |  height || expectedResult
+    1      | 1       |  1      || one()
+    11     | 1       |  1      || eleven()
+    2      | 1       |  1      || two()
+    12     | 1       |  1      || twelve()
+    3      | 1       |  1      || three()
+    4      | 1       |  1      || four()
+    5      | 1       |  1      || five()
+    6      | 1       |  1      || six()
+    7      | 1       |  1      || seven()
+    8      | 1       |  1      || eight()
+    9      | 1       |  1      || nine()
+    0      | 1       |  1      || zero()
   }
 
   private static final String one() {

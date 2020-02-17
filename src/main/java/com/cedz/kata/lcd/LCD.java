@@ -21,7 +21,7 @@ public class LCD {
     }
   }
 
-  public static String toLCD(int number) {
+  public static String toLCD(int number, int width, int height) {
     StringBuilder ret = new StringBuilder();
 
     List<NumberDrawer> drawers = collectDigitDrawers(number);
