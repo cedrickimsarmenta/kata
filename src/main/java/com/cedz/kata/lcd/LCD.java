@@ -2,6 +2,7 @@ package com.cedz.kata.lcd;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,59 +30,66 @@ public class LCD {
 
     Map<Integer, NumberDrawer> numberDrawerMap = buildMapForDimensions(width,height);
 
-
     StringBuilder ret = new StringBuilder();
 
     List<NumberDrawer> drawers = collectDigitDrawers(number, numberDrawerMap);
 
-    drawTop(ret, drawers);
-    ret.append(NEW_LINE);
-    drawMiddle(ret, drawers);
-    ret.append(NEW_LINE);
-    drawBottom(ret, drawers);
-
+    List<List<String>> allLinesByDigit  = collectLinesByDigit(drawers);
+    drawMultiLinesForMultiDigits(allLinesByDigit, ret);
     System.out.println(ret);
 
     return ret.toString();
   }
 
-  private static void drawBottom(StringBuilder ret, List<NumberDrawer> drawers) {
-    for (int i = 0; i < drawers.size(); i++) {
-      NumberDrawer drawer = drawers.get(i);
-      List<String> drawerLines = drawer.drawBottom();
-      appendDrawerLines(drawerLines, i != drawers.size() - 1, ret);
+  private static void drawMultiLinesForMultiDigits(List<List<String>> linesPerDigit, StringBuilder ret) {
+
+    if(linesPerDigit == null || linesPerDigit.size() == 0 ) {
+      return;
     }
-  }
+    for(int i = 0; i < linesPerDigit.get(0).size(); i ++) {
+      //For each section, each digit will have the same number of lines, depending on the height.
+      //Each digit has many lines. For each line, the characters need to be side by side
+      //i is our current line index
+      // lines(0) __,   |,   |,  |,  |
+      // lines(1) __,   |,   |,  |,  |
 
-  private static void appendDrawerLines(List<String> drawerLines, boolean appendSpace, StringBuilder ret) {
-    for (int i = 0; i < drawerLines.size(); i++) {
-      String drawerLine = drawerLines.get(i);
-      ret.append(drawerLine);
+      for(int j = 0 ; j < linesPerDigit.size() ; j ++) {
+        //Current digit
+        List<String> digitLines = linesPerDigit.get(j);
 
-      if (appendSpace) {
-        ret.append(SPACE);
+        //Current line
+        String drawerLine = digitLines.get(i);
+        ret.append(drawerLine);
+
+        if (j != linesPerDigit.size()-1 ) {
+          //Not the last digit
+          ret.append(SPACE);
+        }
       }
 
-      if(i != drawerLines.size() - 1) {
+      if(i != linesPerDigit.get(0).size() - 1) {
+        //not the last line
         ret.append(NEW_LINE);
       }
     }
-}
 
-  private static void drawMiddle(StringBuilder ret, List<NumberDrawer> drawers) {
-    for (int i = 0; i < drawers.size(); i++) {
-      NumberDrawer drawer = drawers.get(i);
-      List<String> drawerLines = drawer.drawMiddle();
-      appendDrawerLines(drawerLines, i != drawers.size() - 1, ret);
-    }
   }
 
-  private static void drawTop(StringBuilder ret, List<NumberDrawer> drawers) {
+  private static List<List<String>> collectLinesByDigit(List<NumberDrawer> drawers) {
+    List<List<String>> allDigitLines = new ArrayList<>();
+
     for (int i = 0; i < drawers.size(); i++) {
+
+      List<String> digitLines = new ArrayList<>();
       NumberDrawer drawer = drawers.get(i);
-      List<String> drawerLines = drawer.drawTop();
-      appendDrawerLines(drawerLines, i != drawers.size() - 1, ret);
+      digitLines.addAll(drawer.drawTop());
+      digitLines.addAll(drawer.drawMiddle());
+      digitLines.addAll(drawer.drawBottom());
+
+      allDigitLines.add(digitLines);
     }
+
+   return allDigitLines;
   }
 
   private static List<NumberDrawer> collectDigitDrawers(int number, Map<Integer, NumberDrawer> numberDrawerMap) {

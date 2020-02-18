@@ -32,6 +32,7 @@ class LCDSpec extends  Specification{
     8      | 1       |  2      || eightHigh()
     8      | 1       |  3      || eightVeryHigh()
     2      | 1       |  2      || twoHigh()
+    22     | 1       |  2      || twentyTwoHigh()
   }
 
   private static final String one() {
@@ -110,6 +111,12 @@ class LCDSpec extends  Specification{
     return " _ \n" +
             "  |\n _|\n" +
             "|  \n|_ "
+  }
+
+  private static final String twentyTwoHigh() {
+    return " _   _ \n" +
+            "  |   |\n _|  _|\n" +
+            "|   |  \n|_  |_ "
   }
 
 }
