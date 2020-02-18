@@ -25,6 +25,10 @@ class LCDSpec extends  Specification{
     8      | 1       |  1      || eight()
     9      | 1       |  1      || nine()
     0      | 1       |  1      || zero()
+    7      | 2       |  1      || sevenWide()
+    8      | 3       |  1      || eightVeryWide()
+    1      | 3       |  1      || oneVeryWide()
+
   }
 
   private static final String one() {
@@ -56,6 +60,12 @@ class LCDSpec extends  Specification{
   private static final String seven() {
     return " _ \n  |\n  |"
   }
+
+  private static final String sevenWide() {
+    return " __ \n   |\n   |"
+  }
+
+
   private static final String eight() {
     return " _ \n|_|\n|_|"
   }
@@ -67,4 +77,13 @@ class LCDSpec extends  Specification{
   private static final String zero() {
     return " _ \n| |\n|_|"
   }
+
+  private static final String eightVeryWide() {
+    return " ___ \n|___|\n|___|"
+  }
+
+  private static final String oneVeryWide() {
+    return "     \n|    \n|    "
+  }
+
 }

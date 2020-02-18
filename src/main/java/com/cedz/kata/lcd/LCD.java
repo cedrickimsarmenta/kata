@@ -8,23 +8,31 @@ import java.util.Map;
 
 public class LCD {
 
-  private static final List<NumberDrawer> DRAWER_REGISTRY = Arrays.asList(
-      new OneDrawer(), new TwoDrawer(), new ThreeDrawer(), new FourDrawer(), new FiveDrawer(), new SixDrawer(), new SevenDrawer(), new EightDrawer(), new NineDrawer(), new ZeroDrawer()
-  );
-  private static final Map<Integer, NumberDrawer> DRAWER_MAP = new HashMap<>();
   public static final String NEW_LINE = "\n";
   public static final String SPACE = " ";
 
-  static {
-    for (NumberDrawer drawer : DRAWER_REGISTRY) {
-      DRAWER_MAP.put(drawer.number(), drawer);
+  private static Map<Integer, NumberDrawer> buildMapForDimensions(int width, int height) {
+    List<NumberDrawer> drawers = Arrays.asList(
+        new OneDrawer(width,height), new TwoDrawer(width,height), new ThreeDrawer(width,height), new FourDrawer(width,height), new FiveDrawer(width,height), new SixDrawer(width,height), new SevenDrawer(width,height), new EightDrawer(width,height), new NineDrawer(width,height), new ZeroDrawer(width,height)
+    );
+    Map<Integer, NumberDrawer> drawerMap = new HashMap<>();
+
+    for (NumberDrawer drawer : drawers) {
+      drawerMap.put(drawer.number(), drawer);
     }
+
+    return drawerMap;
   }
 
+
   public static String toLCD(int number, int width, int height) {
+
+    Map<Integer, NumberDrawer> numberDrawerMap = buildMapForDimensions(width,height);
+
+
     StringBuilder ret = new StringBuilder();
 
-    List<NumberDrawer> drawers = collectDigitDrawers(number);
+    List<NumberDrawer> drawers = collectDigitDrawers(number, numberDrawerMap);
 
     drawTop(ret, drawers);
     ret.append(NEW_LINE);
@@ -70,12 +78,12 @@ public class LCD {
     }
   }
 
-  private static List<NumberDrawer> collectDigitDrawers(int number) {
+  private static List<NumberDrawer> collectDigitDrawers(int number, Map<Integer, NumberDrawer> numberDrawerMap) {
     List<NumberDrawer> drawers = new ArrayList<>();
 
     String numberStr = ("" + number);
     for (String digit : numberStr.split("")) {
-      drawers.add(DRAWER_MAP.get(Integer.parseInt(digit)));
+      drawers.add(numberDrawerMap.get(Integer.parseInt(digit)));
     }
 
     return drawers;
@@ -97,27 +105,31 @@ public class LCD {
     private LineDrawer.Request bottomDescriptor;
 
     private int supportedNumber;
+    private int width;
+    private int height;
 
-    public AbtractDrawer(LineDrawer.Request topDescriptor, LineDrawer.Request midDescriptor, LineDrawer.Request bottomDescriptor, int supportedNumber) {
+    public AbtractDrawer(LineDrawer.Request topDescriptor, LineDrawer.Request midDescriptor, LineDrawer.Request bottomDescriptor, int supportedNumber, int width, int height) {
       this.topDescriptor = topDescriptor;
       this.midDescriptor = midDescriptor;
       this.bottomDescriptor = bottomDescriptor;
       this.supportedNumber = supportedNumber;
+      this.width = width;
+      this.height = height;
     }
 
     @Override
     public String drawTop() {
-      return LineDrawer.draw(topDescriptor);
+      return LineDrawer.draw(topDescriptor, width, height);
     }
 
     @Override
     public String drawMiddle() {
-      return  LineDrawer.draw(midDescriptor);
+      return  LineDrawer.draw(midDescriptor, width, height);
     }
 
     @Override
     public String drawBottom() {
-      return LineDrawer.draw(bottomDescriptor);
+      return LineDrawer.draw(bottomDescriptor, width, height);
     }
     @Override
     public int number() {
@@ -126,61 +138,61 @@ public class LCD {
   }
 
   private static class OneDrawer extends AbtractDrawer  {
-    public OneDrawer() {
-      super(LineDrawer.Request.BLANK, LineDrawer.Request.LEFT_ONLY, LineDrawer.Request.LEFT_ONLY, 1);
+    public OneDrawer(int width, int height) {
+      super(LineDrawer.Request.BLANK, LineDrawer.Request.LEFT_ONLY, LineDrawer.Request.LEFT_ONLY, 1, width, height);
     }
   }
 
   private static class TwoDrawer extends AbtractDrawer  {
-    public TwoDrawer() {
-      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.MIDDLE_AND_RIGHT, LineDrawer.Request.LEFT_AND_MIDDLE, 2);
+    public TwoDrawer(int width, int height) {
+      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.MIDDLE_AND_RIGHT, LineDrawer.Request.LEFT_AND_MIDDLE, 2, width, height);
     }
   }
 
   private static class ThreeDrawer extends AbtractDrawer  {
-    public ThreeDrawer() {
-      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.MIDDLE_AND_RIGHT, LineDrawer.Request.MIDDLE_AND_RIGHT, 3);
+    public ThreeDrawer(int width, int height) {
+      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.MIDDLE_AND_RIGHT, LineDrawer.Request.MIDDLE_AND_RIGHT, 3, width, height);
     }
   }
 
   private static class FourDrawer extends AbtractDrawer  {
-    public FourDrawer() {
-      super(LineDrawer.Request.BLANK, LineDrawer.Request.FULL, LineDrawer.Request.RIGHT_ONLY, 4);
+    public FourDrawer(int width, int height) {
+      super(LineDrawer.Request.BLANK, LineDrawer.Request.FULL, LineDrawer.Request.RIGHT_ONLY, 4, width, height);
     }
   }
 
   private static class FiveDrawer extends AbtractDrawer  {
-    public FiveDrawer() {
-      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.LEFT_AND_MIDDLE, LineDrawer.Request.MIDDLE_AND_RIGHT, 5);
+    public FiveDrawer(int width, int height) {
+      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.LEFT_AND_MIDDLE, LineDrawer.Request.MIDDLE_AND_RIGHT, 5, width, height);
     }
   }
   private static class SixDrawer extends AbtractDrawer  {
-    public SixDrawer() {
-      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.LEFT_AND_MIDDLE, LineDrawer.Request.FULL, 6);
+    public SixDrawer(int width, int height) {
+      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.LEFT_AND_MIDDLE, LineDrawer.Request.FULL, 6, width, height);
     }
   }
 
   private static class SevenDrawer extends AbtractDrawer  {
-    public SevenDrawer() {
-      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.RIGHT_ONLY, LineDrawer.Request.RIGHT_ONLY, 7);
+    public SevenDrawer(int width, int height) {
+      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.RIGHT_ONLY, LineDrawer.Request.RIGHT_ONLY, 7, width, height);
     }
   }
 
   private static class EightDrawer extends AbtractDrawer {
-    public EightDrawer() {
-      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.FULL, LineDrawer.Request.FULL, 8);
+    public EightDrawer(int width, int height) {
+      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.FULL, LineDrawer.Request.FULL, 8, width, height);
     }
   }
 
   private static class NineDrawer extends AbtractDrawer {
-    public NineDrawer() {
-      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.FULL, LineDrawer.Request.MIDDLE_AND_RIGHT, 9);
+    public NineDrawer(int width, int height) {
+      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.FULL, LineDrawer.Request.MIDDLE_AND_RIGHT, 9, width, height);
     }
   }
 
   private static class ZeroDrawer extends AbtractDrawer {
-    public ZeroDrawer() {
-      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.LEFT_AND_RIGHT, LineDrawer.Request.FULL, 0);
+    public ZeroDrawer(int width, int height) {
+      super(LineDrawer.Request.MIDDLE_ONLY, LineDrawer.Request.LEFT_AND_RIGHT, LineDrawer.Request.FULL, 0, width, height);
     }
   }
   private static class LineDrawer {
@@ -208,11 +220,13 @@ public class LCD {
       }
     }
 
-    public static String draw(Request request) {
+    public static String draw(Request request, int width, int height) {
       StringBuilder line = new StringBuilder();
 
       line.append(request.left ? "|" : " ");
-      line.append(request.middle ? "_" : " ");
+      for(int i = 0; i < width; i++) {
+        line.append(request.middle ? "_" : " ");
+      }
       line.append(request.right ? "|" : " ");
 
       return line.toString();
