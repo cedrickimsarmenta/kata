@@ -48,33 +48,39 @@ public class LCD {
   private static void drawBottom(StringBuilder ret, List<NumberDrawer> drawers) {
     for (int i = 0; i < drawers.size(); i++) {
       NumberDrawer drawer = drawers.get(i);
-      ret.append(drawer.drawBottom());
-
-      if (i != drawers.size() - 1) {
-        ret.append(SPACE);
-      }
+      List<String> drawerLines = drawer.drawBottom();
+      appendDrawerLines(drawerLines, i != drawers.size() - 1, ret);
     }
   }
+
+  private static void appendDrawerLines(List<String> drawerLines, boolean appendSpace, StringBuilder ret) {
+    for (int i = 0; i < drawerLines.size(); i++) {
+      String drawerLine = drawerLines.get(i);
+      ret.append(drawerLine);
+
+      if (appendSpace) {
+        ret.append(SPACE);
+      }
+
+      if(i != drawerLines.size() - 1) {
+        ret.append(NEW_LINE);
+      }
+    }
+}
 
   private static void drawMiddle(StringBuilder ret, List<NumberDrawer> drawers) {
     for (int i = 0; i < drawers.size(); i++) {
       NumberDrawer drawer = drawers.get(i);
-      ret.append(drawer.drawMiddle());
-
-      if (i != drawers.size() - 1) {
-        ret.append(SPACE);
-      }
+      List<String> drawerLines = drawer.drawMiddle();
+      appendDrawerLines(drawerLines, i != drawers.size() - 1, ret);
     }
   }
 
   private static void drawTop(StringBuilder ret, List<NumberDrawer> drawers) {
     for (int i = 0; i < drawers.size(); i++) {
       NumberDrawer drawer = drawers.get(i);
-      ret.append(drawer.drawTop());
-
-      if (i != drawers.size() - 1) {
-        ret.append(SPACE);
-      }
+      List<String> drawerLines = drawer.drawTop();
+      appendDrawerLines(drawerLines, i != drawers.size() - 1, ret);
     }
   }
 
@@ -90,11 +96,11 @@ public class LCD {
   }
 
   private static interface NumberDrawer {
-    public String drawTop();
+    public List<String> drawTop();
 
-    public String drawMiddle();
+    public List<String> drawMiddle();
 
-    public String drawBottom();
+    public List<String> drawBottom();
 
     public int number();
   }
@@ -118,19 +124,21 @@ public class LCD {
     }
 
     @Override
-    public String drawTop() {
-      return LineDrawer.draw(topDescriptor, width, height);
+    public List<String> drawTop() {
+      //top always single line
+      return LineDrawer.draw(topDescriptor, width, 1);
     }
 
     @Override
-    public String drawMiddle() {
+    public List<String> drawMiddle() {
       return  LineDrawer.draw(midDescriptor, width, height);
     }
 
     @Override
-    public String drawBottom() {
+    public List<String> drawBottom() {
       return LineDrawer.draw(bottomDescriptor, width, height);
     }
+
     @Override
     public int number() {
       return supportedNumber;
@@ -220,16 +228,26 @@ public class LCD {
       }
     }
 
-    public static String draw(Request request, int width, int height) {
+    public static List<String> draw(Request request, int width, int height) {
+      List<String> lines = new ArrayList<>();
+
+      for (int i = 0; i < height; i ++) {
+        drawSingleLine(request, width, lines, i == height -1);
+      }
+
+      return lines;
+    }
+
+    private static void drawSingleLine(Request request, int width, List<String> lines, boolean isLastLine) {
       StringBuilder line = new StringBuilder();
 
       line.append(request.left ? "|" : " ");
-      for(int i = 0; i < width; i++) {
-        line.append(request.middle ? "_" : " ");
+      for(int i = 0; i < width; i++ ) {
+        line.append((request.middle && isLastLine) ? "_" : " ");
       }
       line.append(request.right ? "|" : " ");
 
-      return line.toString();
+      lines.add(line.toString());
     }
   }
 
