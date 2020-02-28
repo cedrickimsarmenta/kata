@@ -1,4 +1,4 @@
-package com.cedz.kata.dfs;
+package com.cedz.kata.tree;
 
 import java.util.ArrayList;
 import java.util.Collections;
