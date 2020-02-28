@@ -16,8 +16,6 @@ public class DFS {
 			result.addAll(searchTree(child));	
 		}
 		
-		
-		
 		return result;
 	}
 	
