@@ -58,4 +58,29 @@ public class BFS {
       }
       searchTree(nodes, result);
   }
+
+
+  public static Node searchTree(Queue<Node> nodes, String q) {
+    if(nodes.isEmpty()) {
+      return null;
+    }
+    Node p = nodes.poll();
+    if(q.equals(p.getName())) {
+      return p;
+    };
+
+    for (Node child: p.getChildren()) {
+      nodes.add(child);
+    }
+    return searchTree(nodes, q);
+  }
+
+
+  public static Node searchNode(Node p, String q) {
+
+    Queue<Node> nodes = new LinkedList<>();
+    nodes.add(p);
+
+    return searchTree(nodes, q);
+  }
 }
