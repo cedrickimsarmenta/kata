@@ -1,4 +1,4 @@
-package com.cedz.kata.dfs;
+package com.cedz.kata.tree;
 
 import spock.lang.Specification;
 import spock.lang.Unroll;

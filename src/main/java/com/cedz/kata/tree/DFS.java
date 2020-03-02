@@ -1,4 +1,4 @@
-package com.cedz.kata.dfs;
+package com.cedz.kata.tree;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -15,8 +15,6 @@ public class DFS {
 		for(Node child : node.getChildren() ) {
 			result.addAll(searchTree(child));	
 		}
-		
-		
 		
 		return result;
 	}
