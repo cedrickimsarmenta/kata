@@ -6,6 +6,9 @@ public class Diamond {
   public static final String NEW_LINE = "\n";
 
   public static String diamond(char letter) {
+    return diamond(letter, 1);
+  }
+  public static String diamond(char letter, int size) {
     char start = 'A';
 
     int height = (letter - start) + 1;
@@ -15,7 +18,7 @@ public class Diamond {
     StringBuilder resultBottom = new StringBuilder();
 
     for(int i = 0 ; i < height ; i ++) {
-      String currentLine = generateLine(height, i, start); //since this is a diamond we need to append to the top, and the bottom. except for the middle of the diamond.
+      String currentLine = generateLine(height, i, start, size); //since this is a diamond we need to append to the top, and the bottom. except for the middle of the diamond.
       //append to the top and middle
       resultTopAndMiddle.append(currentLine);
 
@@ -38,16 +41,16 @@ public class Diamond {
     return allLines.substring(0, allLines.length()-1);
   }
 
-  private static String generateLine(int height, int i, char current) {
+  private static String generateLine(int height, int i, char current, int size) {
     StringBuilder result = new StringBuilder();
 
-    handlePrefixSpaces(height, i, result);
+    handlePrefixSpaces(height, i, result,size);
 
     result.append(current);
 
     //Except for the first element (tips, all characters appear twice, where the gap between chars increases as you go to the middle)
     if(i > 0) {
-      handleMiddleSpaces(i, result);
+      handleMiddleSpaces(i, result, size);
 
       result.append(current);
     }
@@ -57,15 +60,27 @@ public class Diamond {
     return result.toString();
   }
 
-  private static void handleMiddleSpaces(int i, StringBuilder result) {
+  private static void handleMiddleSpaces(int i, StringBuilder result, int size) {
     if(i == 0) return;
-    for (int j = 0; j < ((i - 1) * 2) + 1 ; j++) {
+
+
+
+    int heightIndex = (i - 1);
+    //Number of spaces in between letters for row > 2
+    int spaces = heightIndex * size * 2;
+
+
+    //For row > 1, these are the only spaces. You also need to add this to other rows so that it will look like a diamond
+    int extraPadding = (size -1) * 2 + 1;
+
+
+    for (int j = 0; j < spaces + extraPadding ; j++) {
       result.append(SPACE);
     }
   }
 
-  private static void handlePrefixSpaces(int height, int i, StringBuilder result) {
-    for(int j = 0; j < height - i -1; j ++) {
+  private static void handlePrefixSpaces(int height, int i, StringBuilder result, int size) {
+    for(int j = 0; j < (height - i -1) * size; j ++) {
       result.append(SPACE);
    }
   }
