@@ -11,6 +11,7 @@ public class MinesweeperGame {
 
   public static final String REVEAL = "1";
   public static final String COMMAND_DELIMITER = "-";
+  public static final String FLAG = "2";
 
   public static void main (String[] args) {
     //TODO: Clean up handling of game
@@ -23,25 +24,29 @@ public class MinesweeperGame {
       System.out.println("Board:\n");
       System.out.println(minesweeper.userBoard());
 
-      System.out.println("Enter command: \n[1]Reveal Item. Format (1-x-y) where x is the row and y is column. Example 1-0-0 reveals the tile at 0,0 coordinate\n");
+      System.out.println("Enter command: \n[1]Reveal Tile. Format (1-x-y) where x is the row and y is column. Example 1-0-0 reveals the tile at 0,0 coordinate\n" +
+          "[2]Flag tile, Format (2-x-y-<flag_name>]) where x is the row and y is column. Example 1-0-0-BOMB flags the tile at 0,0 coordinate as BOMB. Possible flags\n" +
+          "a) BOMB\nb) UNCERTAIN\nc) NONE (used to unset)\n");
 
       String command = myObj.nextLine();  // Read user input
 
+      //Calculate x and y
+      String[] params = command.split(COMMAND_DELIMITER);
+      Integer x = null;
+      Integer y = null;
+
+      try {
+        x = Integer.parseInt(params[1]);
+        y = Integer.parseInt(params[2]);
+      } catch (Exception e) {
+        System.out.println("Invalid input.\n");
+        continue;
+      }
+
+
 
       if (command.startsWith(REVEAL)) {
-        String[] params = command.split(COMMAND_DELIMITER);
-        Integer x = null;
-        Integer y = null;
-
-        try {
-          x = Integer.parseInt(params[1]);
-          y = Integer.parseInt(params[2]);
-        } catch (Exception e) {
-          System.out.println("Invalid input.\n");
-          continue;
-        }
         minesweeper.leftClick(x,y);
-
         GameState state = minesweeper.getState();
         switch (state) {
           case WIN:
@@ -57,6 +62,8 @@ public class MinesweeperGame {
           case PENDING:
             continue;
         }
+      } else if(command.startsWith(FLAG)) {
+        minesweeper.flag(x,y, FlagType.valueOf(params[3]));
       }
 
     }
