@@ -5,6 +5,7 @@ public class Minesweeper {
   public static final String NEW_LINE = "\n";
   public static final String SPACE = " ";
   public static final char BOMB = '*';
+  private GameState state = GameState.PENDING;
   private int rows;
   private int columns;
   private Tile[][] board;
@@ -23,11 +24,21 @@ public class Minesweeper {
   public void leftClick(int x, int y) {
     Tile tile = board[x][y];
 
+    if(this.state != GameState.PENDING) {
+      throw new IllegalStateException("GAME IS ALREADY OVER");
+    }
     if(tile.isBomb()) {
       //Game ends. Bomb is opened
       this.revealAll();
+      state = GameState.LOSE;
     } else {
       tile.leftClick(board);
+
+      if(isSolved()) {
+        //Game ends, all tiles except for bombs opened
+        this.revealAll();
+        this.state = GameState.WIN;
+      }
     }
   }
 
@@ -105,5 +116,28 @@ public class Minesweeper {
     }
 
     return display.toString();
+  }
+
+
+  /**
+   * To be solved, all mines have to be opened
+   * @return
+   */
+  public boolean isSolved() {
+    StringBuilder display = new StringBuilder();
+    for(int i = 0 ; i < rows; i ++) {
+      for(int j = 0 ; j < columns; j++) {
+        Tile tile = board[i][j];
+        if(!tile.isBomb() && !tile.isOpen()) {
+          return false;
+        }
+      }
+    }
+
+    return true;
+  }
+
+  public GameState getState() {
+    return state;
   }
 }

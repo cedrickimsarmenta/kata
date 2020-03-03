@@ -42,13 +42,14 @@ class MinesweeperSpec extends Specification {
 
     then:
     "@100\n@@@0\n@@@0\n@@@0" == userBoard
-
+    minesweeper.getState() == GameState.PENDING
     when:
     minesweeper.leftClick(1,0)
     userBoard = minesweeper.userBoard()
 
     then:
     "@100\n2@@0\n@@@0\n@@@0" == userBoard
+    minesweeper.getState() == GameState.PENDING
 
     when:
     minesweeper.leftClick(0,0)
@@ -56,5 +57,64 @@ class MinesweeperSpec extends Specification {
 
     then:
     "*100\n2210\n1*10\n1110" == userBoard
+    minesweeper.getState() == GameState.LOSE
+  }
+
+  def "givenInput_whenInitAndLeftClickACtions_winningScenario_thenShouldDisplayBoard" () {
+    given:
+    Minesweeper minesweeper = new Minesweeper("4 4\n*...\n....\n.*..\n....");
+
+    when:
+    String userBoard = minesweeper.userBoard()
+
+    then:
+    "@@@@\n@@@@\n@@@@\n@@@@" == userBoard
+
+    when:
+    minesweeper.leftClick(0,1)
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "@100\n@@@0\n@@@0\n@@@0" == userBoard
+    minesweeper.getState() == GameState.PENDING
+    when:
+    minesweeper.leftClick(1,0)
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "@100\n2@@0\n@@@0\n@@@0" == userBoard
+    minesweeper.getState() == GameState.PENDING
+
+    when:
+    minesweeper.leftClick(1,1)
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "@100\n22@0\n@@@0\n@@@0" == userBoard
+    minesweeper.getState() == GameState.PENDING
+
+    when:
+    minesweeper.leftClick(1,2)
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "@100\n2210\n@@@0\n@@@0" == userBoard
+    minesweeper.getState() == GameState.PENDING
+
+    when:
+    //Click the remaining tiles
+    minesweeper.leftClick(2,0)
+    minesweeper.leftClick(2,2)
+    minesweeper.leftClick(2,3)
+    minesweeper.leftClick(3,0)
+    minesweeper.leftClick(3,1)
+    minesweeper.leftClick(3,2)
+
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "*100\n2210\n1*10\n1110" == userBoard
+    minesweeper.getState() == GameState.WIN
+
   }
 }
