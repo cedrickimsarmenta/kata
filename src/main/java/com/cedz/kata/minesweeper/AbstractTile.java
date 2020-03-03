@@ -8,6 +8,7 @@ public abstract class AbstractTile implements Tile {
   protected int x;
   protected int y;
   private boolean open = false;
+  private FlagType flag = FlagType.NONE;
 
   public AbstractTile(int x, int y) {
     this.x = x;
@@ -20,6 +21,12 @@ public abstract class AbstractTile implements Tile {
   }
 
   @Override
+  public void flag(FlagType flagType) {
+    this.flag = flagType;
+  }
+
+
+  @Override
   public void leftClick(Tile[][] board) {
     this.open = true;
   }
@@ -28,7 +35,9 @@ public abstract class AbstractTile implements Tile {
   public String display() {
     if(this.open) {
      return this.displayState();
-    } else {
+    } else if (this.flag != FlagType.NONE) {
+      return this.flag.getDisplay();
+    }else {
       return NEW_TILE;
     }
   }

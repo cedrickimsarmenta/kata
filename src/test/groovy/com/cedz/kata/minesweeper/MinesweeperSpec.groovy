@@ -94,4 +94,44 @@ class MinesweeperSpec extends Specification {
     "*100\n2210\n1*10\n1110" == userBoard
     minesweeper.getState() == GameState.WIN
   }
+
+
+  def "givenInput_whenFlag_thenShouldDisplayFlag" () {
+    given:
+    Minesweeper minesweeper = new Minesweeper("4 4\n*...\n....\n.*..\n....");
+
+    when:
+    String userBoard = minesweeper.userBoard()
+
+    then:
+    "@@@@\n@@@@\n@@@@\n@@@@" == userBoard
+
+    when:
+    minesweeper.flag(0,0, FlagType.BOMB)
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "F@@@\n@@@@\n@@@@\n@@@@" == userBoard
+    when:
+    minesweeper.flag(0,0, FlagType.NONE)
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "@@@@\n@@@@\n@@@@\n@@@@" == userBoard
+
+    when:
+    minesweeper.flag(0,0, FlagType.UNCERTAIN)
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "?@@@\n@@@@\n@@@@\n@@@@" == userBoard
+
+    when:
+    minesweeper.flag(0,1, FlagType.UNCERTAIN)
+    minesweeper.leftClick(0, 1)
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "?1@@\n@@@@\n@@@@\n@@@@" == userBoard
+  }
 }

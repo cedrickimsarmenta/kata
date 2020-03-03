@@ -6,6 +6,7 @@ public interface Tile {
    * @return
    */
   String displayState();
+  void flag(FlagType flagType);
   void incrementBombCount();
   int getNeighborBombCount();
 
@@ -19,4 +20,5 @@ public interface Tile {
   String display();
 
   void leftClick(Tile[][] board);
+
 }

@@ -21,6 +21,12 @@ public class Minesweeper {
     readBombs(lines);
   }
 
+  public void flag(int x, int y, FlagType flagType) {
+    Tile tile = board[x][y];
+    tile.flag(flagType);
+  }
+
+
   public void leftClick(int x, int y) {
     Tile tile = board[x][y];
 
