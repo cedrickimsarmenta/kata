@@ -15,23 +15,24 @@ public class Minesweeper {
     }
 
     String[] lines = input.split(NEW_LINE);
-
     parseMetadata(lines[0]);
-
     initBoard();
+    readBombs(lines);
+  }
 
+  private void readBombs(String[] lines) {
     for(int i = 0; i < rows; i++) {
       String line = lines[i+1];
       for(int j = 0; j < columns ; j++) {
         char tileChar = line.charAt(j);
 
         if(tileChar == BOMB){
-          board[i][j] = new BombTile();
+          BombTile bombTile = new BombTile(i,j);
+          board[i][j] = bombTile;
+          bombTile.updateNeighbors(board);
         }
-
       }
     }
-
   }
 
   private void parseMetadata(String line) {
@@ -53,11 +54,10 @@ public class Minesweeper {
 
       for(int j = 0; j < columns ; j ++) {
         //By default, everything is a safe tile.
-        this.board[i][j] = new SafeTile();
+        this.board[i][j] = new SafeTile(i,j);
       }
     }
   }
-
 
   public String board() {
     StringBuilder display = new StringBuilder();
