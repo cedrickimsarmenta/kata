@@ -20,6 +20,17 @@ public class Minesweeper {
     readBombs(lines);
   }
 
+  public void leftClick(int x, int y) {
+    Tile tile = board[x][y];
+
+    if(tile.isBomb()) {
+      //Game ends. Bomb is opened
+      this.revealAll();
+    } else {
+      tile.leftClick(board);
+    }
+  }
+
   private void readBombs(String[] lines) {
     for(int i = 0; i < rows; i++) {
       String line = lines[i+1];
@@ -59,7 +70,29 @@ public class Minesweeper {
     }
   }
 
-  public String board() {
+  public String boardState() {
+    StringBuilder display = new StringBuilder();
+    for(int i = 0 ; i < rows; i ++) {
+      for(int j = 0 ; j < columns; j++) {
+        display.append(board[i][j].displayState());
+      }
+
+      if(i != rows - 1) {
+        display.append(NEW_LINE);
+      }
+    }
+
+    return display.toString();
+  }
+  public void revealAll() {
+    StringBuilder display = new StringBuilder();
+    for(int i = 0 ; i < rows; i ++) {
+      for(int j = 0 ; j < columns; j++) {
+        board[i][j].leftClick(board);
+      }
+    }
+  }
+  public String userBoard() {
     StringBuilder display = new StringBuilder();
     for(int i = 0 ; i < rows; i ++) {
       for(int j = 0 ; j < columns; j++) {

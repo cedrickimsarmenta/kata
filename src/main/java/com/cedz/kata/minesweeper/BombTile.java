@@ -6,7 +6,7 @@ public class BombTile extends AbstractTile {
   }
 
   @Override
-  public String display() {
+  public String displayState() {
     return "*";
   }
 
@@ -15,39 +15,20 @@ public class BombTile extends AbstractTile {
     //do nothing for bombs
   }
 
-  public void updateNeighbors(Tile[][] board) {
-    boolean notLastColumn =  this.y < board[x].length - 1;
-    boolean notLastRow =this.x < board.length - 1;
-    boolean notFirstRow = x > 0;
-    boolean notFirstColumn = y > 0;
-    if(notFirstColumn) {
-      board[x][y-1].incrementBombCount();
-    }
-    if(notLastColumn) {
-      board[x][y+1].incrementBombCount();
-    }
-    if(notFirstRow) {
-      board[x-1][y].incrementBombCount();
-    }
-    if(notLastRow) {
-      board[x+1][y].incrementBombCount();
-    }
-    if(notFirstRow && notFirstColumn) {
-      board[x-1][y-1].incrementBombCount();
-    }
-    if(notLastRow && notLastColumn) {
-      board[x+1][y+1].incrementBombCount();
-    }
-    if(notLastRow && notFirstColumn) {
-      board[x+1][y-1].incrementBombCount();
-    }
-    if(notFirstRow && notLastColumn) {
-      board[x-1][y+1].incrementBombCount();
-    }
-
-
-
-
-
+  @Override
+  public int getNeighborBombCount() {
+    return 0;
   }
+
+  @Override
+  public boolean isBomb() {
+    return true;
+  }
+
+  public void updateNeighbors(Tile[][] board) {
+    for(Tile tile : getNeighbors(board)) {
+      tile.incrementBombCount();
+    }
+  }
+
 }

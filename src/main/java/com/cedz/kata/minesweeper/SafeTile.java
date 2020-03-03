@@ -9,7 +9,7 @@ public class SafeTile extends AbstractTile {
   }
 
   @Override
-  public String display() {
+  public String displayState() {
     return numberOfBombNeighbors + "";
   }
 
@@ -17,4 +17,28 @@ public class SafeTile extends AbstractTile {
   public void incrementBombCount() {
     this.numberOfBombNeighbors = numberOfBombNeighbors+1;
   }
+
+  @Override
+  public int getNeighborBombCount() {
+    return numberOfBombNeighbors;
+  }
+
+  @Override
+  public boolean isBomb() {
+    return false;
+  }
+
+
+  @Override
+  public void leftClick(Tile[][] board) {
+    super.leftClick(board);
+
+    for(Tile tile : getNeighbors(board)) {
+      if(!tile.isOpen() && !tile.isBomb() && tile.getNeighborBombCount() == 0) {
+        tile.leftClick(board);
+      }
+    }
+  }
+
+
 }
