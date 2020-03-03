@@ -7,7 +7,7 @@ public class Minesweeper {
   public static final char BOMB = '*';
   private int rows;
   private int columns;
-  private char[][] board;
+  private Tile[][] board;
 
   public Minesweeper(String input) {
     if(input == null) {
@@ -16,20 +16,9 @@ public class Minesweeper {
 
     String[] lines = input.split(NEW_LINE);
 
-    String[] boardData = lines[0].split(SPACE);
+    parseMetadata(lines[0]);
 
-    if (boardData.length != 2) {
-      throw new IllegalStateException("illegal specification of board size");
-    }
-
-    this.rows = Integer.parseInt(boardData[0]);
-    this.columns = Integer.parseInt(boardData[1]);
-
-    this.board = new char[rows][];
-
-    for(int i=0; i<rows ; i++) {
-      this.board[i] = new char[rows];
-    }
+    initBoard();
 
     for(int i = 0; i < rows; i++) {
       String line = lines[i+1];
@@ -37,7 +26,7 @@ public class Minesweeper {
         char tileChar = line.charAt(j);
 
         if(tileChar == BOMB){
-          board[i][j] = BOMB;
+          board[i][j] = new BombTile();
         }
 
       }
@@ -45,12 +34,36 @@ public class Minesweeper {
 
   }
 
+  private void parseMetadata(String line) {
+    String[] boardData = line.split(SPACE);
+
+    if (boardData.length != 2) {
+      throw new IllegalStateException("illegal specification of board size");
+    }
+
+    this.rows = Integer.parseInt(boardData[0]);
+    this.columns = Integer.parseInt(boardData[1]);
+  }
+
+  private void initBoard() {
+    this.board = new Tile[rows][];
+
+    for(int i=0; i<rows ; i++) {
+      this.board[i] = new Tile[columns];
+
+      for(int j = 0; j < columns ; j ++) {
+        //By default, everything is a safe tile.
+        this.board[i][j] = new SafeTile();
+      }
+    }
+  }
+
 
   public String board() {
     StringBuilder display = new StringBuilder();
     for(int i = 0 ; i < rows; i ++) {
       for(int j = 0 ; j < columns; j++) {
-        display.append(board[i][j]);
+        display.append(board[i][j].display());
       }
 
       if(i != rows - 1) {

@@ -12,7 +12,11 @@ class MinesweeperSpec extends Specification {
     expectedResult == new Minesweeper(input).board();
 
     where:
-    input    || expectedResult
-    "1 1\n*" || "*"
+    input                                                                 || expectedResult
+    "1 1\n*"                                                              || "*"
+    "1 5\n*****"                                                          || "*****"
+    "5 1\n*\n*\n*\n*\n*"                                                  || "*\n*\n*\n*\n*"
+    "1 1\n."                                                              || "0"
+
   }
 }
