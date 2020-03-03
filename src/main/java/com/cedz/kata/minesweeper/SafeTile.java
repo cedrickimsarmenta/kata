@@ -33,11 +33,15 @@ public class SafeTile extends AbstractTile {
   public void leftClick(Tile[][] board) {
     super.leftClick(board);
 
-    for(Tile tile : getNeighbors(board)) {
-      if(!tile.isOpen() && !tile.isBomb() && tile.getNeighborBombCount() == 0) {
-        tile.leftClick(board);
+    if(this.getNeighborBombCount() == 0) {
+
+      for(Tile tile : getNeighbors(board)) {
+        if(!tile.isOpen() && !tile.isBomb()) {
+          tile.leftClick(board);
+        }
       }
     }
+
   }
 
 

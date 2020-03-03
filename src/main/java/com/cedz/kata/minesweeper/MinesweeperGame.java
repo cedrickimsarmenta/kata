@@ -63,9 +63,9 @@ public class MinesweeperGame {
   }
 
   private static String generateBoard() {
-    int rows = 5;
-    int columns = 5;
-    int bombCount = 5;
+    int rows = 10;
+    int columns = 10;
+    int bombCount = 10;
 
     StringBuilder input = new StringBuilder(rows + " " + columns + "\n");
 

@@ -35,22 +35,6 @@ class MinesweeperSpec extends Specification {
     then:
     "@@@@\n@@@@\n@@@@\n@@@@" == userBoard
 
-
-    when:
-    minesweeper.leftClick(0,1)
-    userBoard = minesweeper.userBoard()
-
-    then:
-    "@100\n@@@0\n@@@0\n@@@0" == userBoard
-    minesweeper.getState() == GameState.PENDING
-    when:
-    minesweeper.leftClick(1,0)
-    userBoard = minesweeper.userBoard()
-
-    then:
-    "@100\n2@@0\n@@@0\n@@@0" == userBoard
-    minesweeper.getState() == GameState.PENDING
-
     when:
     minesweeper.leftClick(0,0)
     userBoard = minesweeper.userBoard()
@@ -70,51 +54,44 @@ class MinesweeperSpec extends Specification {
     then:
     "@@@@\n@@@@\n@@@@\n@@@@" == userBoard
 
+
     when:
     minesweeper.leftClick(0,1)
     userBoard = minesweeper.userBoard()
 
     then:
-    "@100\n@@@0\n@@@0\n@@@0" == userBoard
+    "@1@@\n@@@@\n@@@@\n@@@@" == userBoard
     minesweeper.getState() == GameState.PENDING
+
+    when:
+    minesweeper.leftClick(0,2)
+    userBoard = minesweeper.userBoard()
+
+    then:
+    "@100\n@210\n@@10\n@@10" == userBoard
+    minesweeper.getState() == GameState.PENDING
+
+
     when:
     minesweeper.leftClick(1,0)
     userBoard = minesweeper.userBoard()
 
-    then:
-    "@100\n2@@0\n@@@0\n@@@0" == userBoard
-    minesweeper.getState() == GameState.PENDING
-
-    when:
-    minesweeper.leftClick(1,1)
-    userBoard = minesweeper.userBoard()
 
     then:
-    "@100\n22@0\n@@@0\n@@@0" == userBoard
-    minesweeper.getState() == GameState.PENDING
-
-    when:
-    minesweeper.leftClick(1,2)
-    userBoard = minesweeper.userBoard()
-
-    then:
-    "@100\n2210\n@@@0\n@@@0" == userBoard
+    "@100\n2210\n@@10\n@@10" == userBoard
     minesweeper.getState() == GameState.PENDING
 
     when:
     //Click the remaining tiles
     minesweeper.leftClick(2,0)
     minesweeper.leftClick(2,2)
-    minesweeper.leftClick(2,3)
     minesweeper.leftClick(3,0)
     minesweeper.leftClick(3,1)
-    minesweeper.leftClick(3,2)
 
     userBoard = minesweeper.userBoard()
 
     then:
     "*100\n2210\n1*10\n1110" == userBoard
     minesweeper.getState() == GameState.WIN
-
   }
 }
