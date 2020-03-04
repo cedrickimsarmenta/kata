@@ -1,5 +1,8 @@
 package com.cedz.kata.minesweeper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Minesweeper {
 
   public static final String NEW_LINE = "\n";
@@ -8,6 +11,8 @@ public class Minesweeper {
   private GameState state = GameState.PENDING;
   private int rows;
   private int columns;
+  private int bombs = 0;
+
   private Tile[][] board;
 
   public Minesweeper(String input) {
@@ -35,14 +40,14 @@ public class Minesweeper {
     }
     if(tile.isBomb()) {
       //Game ends. Bomb is opened
-      this.revealAll();
+      this.revealAllBombs();
       state = GameState.LOSE;
     } else {
       tile.leftClick(board);
 
       if(isSolved()) {
         //Game ends, all tiles except for bombs opened
-        this.revealAll();
+        this.revealAllBombs();
         this.state = GameState.WIN;
       }
     }
@@ -58,6 +63,7 @@ public class Minesweeper {
           BombTile bombTile = new BombTile(i,j);
           board[i][j] = bombTile;
           bombTile.updateNeighbors(board);
+          bombs++;
         }
       }
     }
@@ -101,11 +107,11 @@ public class Minesweeper {
 
     return display.toString();
   }
-  public void revealAll() {
-    StringBuilder display = new StringBuilder();
-    for(int i = 0 ; i < rows; i ++) {
-      for(int j = 0 ; j < columns; j++) {
-        board[i][j].leftClick(board);
+  public void revealAllBombs() {
+
+    for(Tile tile : getAllTiles()) {
+      if(tile.isBomb()) {
+        tile.leftClick(board);
       }
     }
   }
@@ -130,19 +136,36 @@ public class Minesweeper {
    * @return
    */
   public boolean isSolved() {
-    StringBuilder display = new StringBuilder();
-    for(int i = 0 ; i < rows; i ++) {
-      for(int j = 0 ; j < columns; j++) {
-        Tile tile = board[i][j];
-        if(!tile.isBomb() && !tile.isOpen()) {
-          return false;
-        }
+    for(Tile tile : getAllTiles()) {
+      if(!tile.isBomb() && !tile.isOpen()) {
+        return false;
       }
     }
-
     return true;
   }
 
+  private List<Tile> getAllTiles() {
+    List<Tile> result = new ArrayList<>(rows * columns);
+    for(int i = 0 ; i < rows; i ++) {
+      for(int j = 0 ; j < columns; j++) {
+        result.add(board[i][j]);
+      }
+    }
+
+    return result;
+  }
+
+  public int getBombsRemaining() {
+    int bombsRemaining = bombs;
+
+    for(Tile tile : getAllTiles()) {
+      if(tile.getFlag() == FlagType.BOMB) {
+        bombsRemaining --;
+      }
+    }
+
+    return bombsRemaining;
+  }
   public GameState getState() {
     return state;
   }

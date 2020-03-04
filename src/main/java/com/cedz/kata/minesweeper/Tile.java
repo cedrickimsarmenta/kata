@@ -7,6 +7,7 @@ public interface Tile {
    */
   String displayState();
   void flag(FlagType flagType);
+  FlagType getFlag();
   void incrementBombCount();
   int getNeighborBombCount();
 

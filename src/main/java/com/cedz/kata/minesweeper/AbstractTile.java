@@ -42,6 +42,10 @@ public abstract class AbstractTile implements Tile {
     }
   }
 
+  @Override
+  public FlagType getFlag() {
+    return flag;
+  }
   protected List<Tile> getNeighbors(Tile[][] board) {
     List<Tile> neighbors = new ArrayList<>();
 

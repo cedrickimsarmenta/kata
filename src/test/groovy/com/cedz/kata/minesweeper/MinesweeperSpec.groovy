@@ -40,7 +40,7 @@ class MinesweeperSpec extends Specification {
     userBoard = minesweeper.userBoard()
 
     then:
-    "*100\n2210\n1*10\n1110" == userBoard
+    "*@@@\n@@@@\n@*@@\n@@@@" == userBoard
     minesweeper.getState() == GameState.LOSE
   }
 
@@ -133,5 +133,37 @@ class MinesweeperSpec extends Specification {
 
     then:
     "?1@@\n@@@@\n@@@@\n@@@@" == userBoard
+  }
+
+
+  def "givenBoard_whenGetRemainingBombs_thenShouldReturnCorrectCount" () {
+    given:
+    Minesweeper minesweeper = new Minesweeper("4 4\n*...\n....\n.*..\n....");
+
+    when:
+    String userBoard = minesweeper.userBoard()
+
+    then:
+    2 == minesweeper.getBombsRemaining()
+
+    when:
+    minesweeper.flag(0,0, FlagType.BOMB)
+
+    then:
+    1 == minesweeper.getBombsRemaining()
+
+    when:
+    minesweeper.flag(0,0, FlagType.NONE)
+
+    then:
+    2 == minesweeper.getBombsRemaining()
+
+    when:
+    minesweeper.flag(0,0, FlagType.BOMB)
+    minesweeper.flag(0,1, FlagType.BOMB)
+    minesweeper.flag(0,2, FlagType.BOMB)
+
+    then:
+    -1 == minesweeper.getBombsRemaining()
   }
 }

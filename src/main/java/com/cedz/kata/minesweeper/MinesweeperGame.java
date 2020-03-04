@@ -14,7 +14,7 @@ public class MinesweeperGame {
   public static final String FLAG = "2";
 
   public static void main (String[] args) {
-    //TODO: Clean up handling of game
+
     String meta = generateBoard();
 
     Minesweeper minesweeper = new Minesweeper(meta);
@@ -22,6 +22,7 @@ public class MinesweeperGame {
     System.out.println("Welcome to minesweeper!:\n");
     while (true) {
       System.out.println("Board:\n");
+      System.out.println("Remaining Bombs: " + minesweeper.getBombsRemaining() + "\n");
       System.out.println(minesweeper.userBoard());
 
       System.out.println("Enter command: \n[1]Reveal Tile. Format (1-x-y) where x is the row and y is column. Example 1-0-0 reveals the tile at 0,0 coordinate\n" +
