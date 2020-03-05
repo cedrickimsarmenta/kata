@@ -12,17 +12,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class PairChecker extends AbstractHandChecker {
-
-
-  @Override
-  public HandType doCheck(HandContext context) {
-    Collection<Integer> counts = context.getRankCounts().values();
-    if(counts.contains(2)) {
-      if(Collections.frequency(counts, 2) == 1) {
-        return HandType.PAIR;
-      }
-    }
-    return null;
+public class PairChecker extends AbstractCountChecker {
+  public PairChecker() {
+    super(2, HandType.PAIR);
   }
 }

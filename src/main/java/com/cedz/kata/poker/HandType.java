@@ -8,10 +8,8 @@ public enum HandType {
   TRIO("Three of a Kind", "The best card are 3 of a kind", 3),
   STRAIGHT("Straight", "All 5 cards are consecutive", 4),
   FLUSH("Flush", "All 5 cards are the same suite", 5),
-  FULL_HOUSE("Full House", "A pair and a trio", 6)
-
-
-
+  FULL_HOUSE("Full House", "A pair and a trio", 6),
+  FOUR_OF_A_KIND("Four of a Kind", "Four of a kind", 7)
   ;
 
   HandType(String name, String description, int score) {

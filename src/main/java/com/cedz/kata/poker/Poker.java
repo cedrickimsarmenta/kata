@@ -1,6 +1,7 @@
 package com.cedz.kata.poker;
 
 import com.cedz.kata.poker.handChecker.FlushChecker;
+import com.cedz.kata.poker.handChecker.FourOfAKindChecker;
 import com.cedz.kata.poker.handChecker.FullHouseChecker;
 import com.cedz.kata.poker.handChecker.HandChecker;
 import com.cedz.kata.poker.handChecker.HandContext;
@@ -21,6 +22,7 @@ public class Poker {
   private static HandChecker root;
   static {
     //Init the checkers
+    FourOfAKindChecker fourOfAKindChecker = new FourOfAKindChecker();
     FullHouseChecker fullHouseChecker = new FullHouseChecker();
     FlushChecker flushChecker = new FlushChecker();
     StraightChecker straightChecker = new StraightChecker();
@@ -30,7 +32,8 @@ public class Poker {
     HighCardChecker highCardChecker = new HighCardChecker();
 
 
-    root = fullHouseChecker;
+    root = fourOfAKindChecker;
+    fourOfAKindChecker.setNext(fullHouseChecker);
     fullHouseChecker.setNext(flushChecker);
     flushChecker.setNext(straightChecker);
     straightChecker.setNext(trioChecker);
