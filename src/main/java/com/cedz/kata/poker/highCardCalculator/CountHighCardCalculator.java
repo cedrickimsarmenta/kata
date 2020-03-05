@@ -17,6 +17,6 @@ public class CountHighCardCalculator implements HighCardCalculator {
 
   @Override
   public Rank calculate(HandContext context) {
-    return context.filterRanksByCount(2).get(0);
+    return context.filterRanksByCount(count).get(0);
   }
 }
