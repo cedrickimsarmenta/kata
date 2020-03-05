@@ -4,9 +4,11 @@ import com.cedz.kata.poker.Card;
 import com.cedz.kata.poker.Rank;
 import com.cedz.kata.util.CollectionUtils;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Contains relevant and re-usable data about the hand
@@ -32,5 +34,12 @@ public class HandContext {
 
   public Map<Rank, Integer> getRankCounts() {
     return rankCounts;
+  }
+
+  public List<Integer> getRankValues() {
+    List<Integer> rankIndexes = this.getRankCounts().keySet().stream().map(Rank::getRank).collect(Collectors.toList());
+    Collections.sort(rankIndexes);
+
+    return rankIndexes;
   }
 }

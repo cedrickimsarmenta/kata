@@ -12,7 +12,7 @@ public class StraightChecker extends  AbstractHandChecker {
   protected HandType doCheck(HandContext context) {
 
     if(context.getRankCounts().size() == 5) {
-      List<Integer> rankIndexes = context.getRankCounts().keySet().stream().map(Rank::getRank).collect(Collectors.toList());
+      List<Integer> rankIndexes = context.getRankValues();
       Collections.sort(rankIndexes);
 
       //check for standard straight, eg, 2-3-4-5-6, 10-J-Q-K-A
