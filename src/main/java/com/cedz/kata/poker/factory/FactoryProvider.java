@@ -11,9 +11,14 @@ public class FactoryProvider {
 
   static {
     FACTORY_MAP.put(HandType.HIGH_CARD, new HighCardProcessorFactory());
+    FACTORY_MAP.put(HandType.FLUSH, new HighCardProcessorFactory());
     FACTORY_MAP.put(HandType.PAIR, new PairProcessorFactory());
     FACTORY_MAP.put(HandType.TWO_PAIRS, new TwoPairProcessorFactory());
     FACTORY_MAP.put(HandType.TRIO, new TrioProcessorFactory());
+    FACTORY_MAP.put(HandType.FULL_HOUSE, new TrioProcessorFactory());
+    FACTORY_MAP.put(HandType.STRAIGHT, new StraightProcessorFactory());
+    FACTORY_MAP.put(HandType.STRAIGHT_FLUSH, new StraightProcessorFactory());
+    FACTORY_MAP.put(HandType.ROYAL_FLUSH, new StraightProcessorFactory());
     FACTORY_MAP.put(HandType.FOUR_OF_A_KIND, new FourOfAKindProcessorFactory());
 
   }
