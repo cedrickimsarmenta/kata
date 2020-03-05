@@ -17,7 +17,7 @@ public class TwoPairChecker extends AbstractHandChecker {
   @Override
   public HandType doCheck(HandContext context) {
     Collection<Integer> counts = context.getRankCounts().values();
-    if(Collections.max(counts) == 2) {
+    if(counts.contains(2)) {
       if(Collections.frequency(counts, 2) == 2) {
         return HandType.TWO_PAIRS;
       }

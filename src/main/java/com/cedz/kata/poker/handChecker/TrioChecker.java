@@ -10,7 +10,7 @@ public class TrioChecker extends  AbstractHandChecker {
   protected HandType doCheck(HandContext context) {
 
     Collection<Integer> counts = context.getRankCounts().values();
-    if(Collections.max(counts) == 3) {
+    if(counts.contains(3)) {
         return HandType.TRIO;
     }
     return null;

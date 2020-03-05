@@ -30,6 +30,7 @@ class PokerSpec extends Specification {
     [CLUBS_QUEEN, HEART_KING, SPADE_ACE, SPADE_2, SPADE_3]          || HandType.HIGH_CARD
     [CLUBS_QUEEN, CLUBS_KING, CLUBS_6, CLUBS_ACE, CLUBS_3]          || HandType.FLUSH
     [HEART_QUEEN, HEART_KING, HEART_6, HEART_ACE, HEART_3]          || HandType.FLUSH
+    [HEART_QUEEN, SPADE_QUEEN, CLUBS_QUEEN, HEART_ACE, CLUBS_ACE]   ||  HandType.FULL_HOUSE
 
   }
 }
