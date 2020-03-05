@@ -1,6 +1,7 @@
 package com.cedz.kata.poker.handChecker;
 
 import com.cedz.kata.poker.Card;
+import com.cedz.kata.poker.Hand;
 import com.cedz.kata.poker.HandType;
 
 import java.util.List;

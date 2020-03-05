@@ -22,4 +22,17 @@ public enum HandType {
   private String name;
   private String description;
   private int score;
+
+
+  public String getName() {
+    return name;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public int getScore() {
+    return score;
+  }
 }

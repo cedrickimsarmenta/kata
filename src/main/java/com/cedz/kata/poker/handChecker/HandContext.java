@@ -4,7 +4,9 @@ import com.cedz.kata.poker.Card;
 import com.cedz.kata.poker.Rank;
 import com.cedz.kata.util.CollectionUtils;
 
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,6 +41,19 @@ public class HandContext {
   public List<Integer> getRankValues() {
     List<Integer> rankIndexes = this.getRankCounts().keySet().stream().map(Rank::getRank).collect(Collectors.toList());
     Collections.sort(rankIndexes);
+
+    return rankIndexes;
+  }
+
+  public List<Rank> getSortedRanksDesc() {
+    List<Rank> rankIndexes = new ArrayList<>(this.getRankCounts().keySet());
+
+    Collections.sort(rankIndexes, new Comparator<Rank>() {
+      @Override
+      public int compare(Rank o1, Rank o2) {
+        return o2.getRank().compareTo(o1.getRank());
+      }
+    });
 
     return rankIndexes;
   }

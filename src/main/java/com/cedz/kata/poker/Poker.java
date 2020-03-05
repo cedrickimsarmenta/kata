@@ -1,5 +1,7 @@
 package com.cedz.kata.poker;
 
+import com.cedz.kata.poker.factory.FactoryProvider;
+import com.cedz.kata.poker.factory.HandTypeProcessorFactory;
 import com.cedz.kata.poker.handChecker.FlushChecker;
 import com.cedz.kata.poker.handChecker.FourOfAKindChecker;
 import com.cedz.kata.poker.handChecker.FullHouseChecker;
@@ -12,6 +14,7 @@ import com.cedz.kata.poker.handChecker.StraightChecker;
 import com.cedz.kata.poker.handChecker.StraightFlushChecker;
 import com.cedz.kata.poker.handChecker.TrioChecker;
 import com.cedz.kata.poker.handChecker.TwoPairChecker;
+import com.cedz.kata.poker.highCardCalculator.HighCardCalculator;
 import com.cedz.kata.util.CollectionUtils;
 
 import java.util.Collections;
@@ -22,6 +25,7 @@ import java.util.Map;
 public class Poker {
 
   private static HandChecker root;
+
   static {
     //Init the checkers
     RoyalFlushChecker royalFlushChecker = new RoyalFlushChecker();
@@ -49,7 +53,18 @@ public class Poker {
   }
 
   public static Hand bestHand(List<Card> cards) {
-    return new Hand(root.check(new HandContext(cards)), cards);
+    HandContext handContext = new HandContext(cards);
+    HandType handType = root.check(handContext);
+
+    if(handType != null) {
+
+      HandTypeProcessorFactory handTypeProcessorFactory = FactoryProvider.getFactory(handType);
+
+      Hand hand = new Hand(handType, cards, handTypeProcessorFactory.getHighCardChecker().calculate(handContext));
+
+      return hand;
+    }
+    return null;
   }
 
 

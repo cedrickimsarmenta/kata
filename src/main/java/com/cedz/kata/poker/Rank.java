@@ -17,7 +17,7 @@ public enum Rank {
   QUEEN("Queen", "Q", 12),
   KING("King", "K", 13);
 
-  Rank(String name, String label, int rank) {
+  Rank(String name, String label, Integer rank) {
     this.name = name;
     this.label = label;
     this.rank = rank;
@@ -25,7 +25,7 @@ public enum Rank {
 
   private String name;
   private String label;
-  private int rank;
+  private Integer rank;
 
 
   public String getName() {
@@ -36,7 +36,7 @@ public enum Rank {
     return label;
   }
 
-  public int getRank() {
+  public Integer getRank() {
     return rank;
   }
 }

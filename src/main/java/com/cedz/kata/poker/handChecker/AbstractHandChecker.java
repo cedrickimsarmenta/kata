@@ -5,7 +5,7 @@ import com.cedz.kata.poker.HandType;
 
 import java.util.List;
 
-public abstract class AbstractHandChecker implements  HandChecker{
+public abstract class AbstractHandChecker implements  HandChecker {
   protected HandChecker next;
 
 
