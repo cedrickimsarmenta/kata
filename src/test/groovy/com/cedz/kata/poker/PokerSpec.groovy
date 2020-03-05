@@ -15,7 +15,7 @@ class PokerSpec extends Specification {
 
     then:
     hand.getHandType() == expectedResult
-
+    hand.getCards() == cards
     where:
     cards                                                               || expectedResult
     [HEART_2, HEART_3, HEART_4, HEART_5, SPADE_7]                       || HandType.HIGH_CARD

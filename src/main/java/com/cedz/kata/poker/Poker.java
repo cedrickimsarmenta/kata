@@ -49,7 +49,7 @@ public class Poker {
   }
 
   public static Hand bestHand(List<Card> cards) {
-    return new Hand(root.check(new HandContext(cards)));
+    return new Hand(root.check(new HandContext(cards)), cards);
   }
 
 
