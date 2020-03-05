@@ -9,8 +9,9 @@ public enum HandType {
   STRAIGHT("Straight", "All 5 cards are consecutive", 4),
   FLUSH("Flush", "All 5 cards are the same suite", 5),
   FULL_HOUSE("Full House", "A pair and a trio", 6),
-  FOUR_OF_A_KIND("Four of a Kind", "Four of a kind", 7)
-  ;
+  FOUR_OF_A_KIND("Four of a Kind", "Four of a kind", 7),
+  STRAIGHT_FLUSH("Straight Flush", "Cards are both straight and flush", 8),
+  ROYAL_FLUSH("Royal Flush", "Cards are both straight and flush, and high card is Ace", 9);
 
   HandType(String name, String description, int score) {
     this.name = name;
