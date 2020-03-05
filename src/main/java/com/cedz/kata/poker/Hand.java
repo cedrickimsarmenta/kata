@@ -1,21 +1,35 @@
 package com.cedz.kata.poker;
 
-import com.cedz.kata.poker.handChecker.HighCardChecker;
-
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class Hand {
   private List<Card> cards;
   private HandType handType;
   private Rank highCard;
-
+  private List<Card> kicker;
 
   public Hand(HandType handType, List<Card> cards, Rank highCard) {
     this.handType = handType;
     this.cards = cards;
     this.highCard = highCard;
+    calculateKicker();
   }
 
+
+
+  private void calculateKicker(){
+
+    if(this.handType.isKickerable()) {
+      //Just remove the high cards from the cards
+      this.kicker = cards.stream()
+          .filter(c->
+              c.getRank() != highCard
+          )
+          .collect(Collectors.toList());
+    }
+
+  }
   public HandType getHandType() {
     return handType;
   }
@@ -26,6 +40,11 @@ public class Hand {
 
   public List<Card> getCards() {
     return cards;
+  }
+
+
+  public List<Card> getKicker() {
+    return kicker;
   }
 }
 

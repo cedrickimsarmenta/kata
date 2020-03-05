@@ -15,12 +15,10 @@ import com.cedz.kata.poker.handChecker.StraightFlushChecker;
 import com.cedz.kata.poker.handChecker.TrioChecker;
 import com.cedz.kata.poker.handChecker.TwoPairChecker;
 import com.cedz.kata.poker.highCardCalculator.HighCardCalculator;
-import com.cedz.kata.util.CollectionUtils;
 
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class Poker {
 
@@ -60,12 +58,19 @@ public class Poker {
 
       HandTypeProcessorFactory handTypeProcessorFactory = FactoryProvider.getFactory(handType);
 
-      Hand hand = new Hand(handType, cards, handTypeProcessorFactory.getHighCardChecker().calculate(handContext));
+      HighCardCalculator highCardCalculator = handTypeProcessorFactory.getHighCardChecker();
+
+
+
+      Hand hand = new Hand(handType, cards, highCardCalculator.calculate(handContext));
 
       return hand;
     }
     return null;
   }
+
+
+
 
 
 
