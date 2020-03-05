@@ -20,19 +20,19 @@ public abstract class AbstractHandChecker implements  HandChecker{
   }
 
   @Override
-  public HandType check(List<Card> cards) {
+  public HandType check(HandContext context) {
 
-    HandType handType = doCheck(cards);
+    HandType handType = doCheck(context);
 
     if(handType != null) {
       return handType;
     }
     if(next != null) {
-      return next.check(cards);
+      return next.check(context);
     }
 
     return null;
   }
 
-  protected abstract HandType doCheck(List<Card> cards);
+  protected abstract HandType doCheck(HandContext context);
 }

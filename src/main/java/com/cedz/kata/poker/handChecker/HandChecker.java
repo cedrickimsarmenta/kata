@@ -8,5 +8,5 @@ import java.util.List;
 public interface HandChecker {
   HandChecker getNext();
   void setNext(HandChecker handChecker);
-  HandType check(List<Card> cards);
+  HandType check(HandContext context);
 }

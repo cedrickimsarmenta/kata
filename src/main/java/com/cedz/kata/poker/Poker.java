@@ -1,6 +1,7 @@
 package com.cedz.kata.poker;
 
 import com.cedz.kata.poker.handChecker.HandChecker;
+import com.cedz.kata.poker.handChecker.HandContext;
 import com.cedz.kata.poker.handChecker.HighCardChecker;
 import com.cedz.kata.poker.handChecker.PairChecker;
 import com.cedz.kata.poker.handChecker.TwoPairChecker;
@@ -26,7 +27,7 @@ public class Poker {
   }
 
   public static Hand bestHand(List<Card> cards) {
-    return new Hand(root.check(cards));
+    return new Hand(root.check(new HandContext(cards)));
   }
 
 

@@ -9,7 +9,7 @@ public class HighCardChecker extends AbstractHandChecker {
 
 
   @Override
-  public HandType doCheck(List<Card> cards) {
+  public HandType doCheck(HandContext context) {
     return HandType.HIGH_CARD;
   }
 }
