@@ -26,4 +26,17 @@ public enum Rank {
   private String name;
   private String label;
   private int rank;
+
+
+  public String getName() {
+    return name;
+  }
+
+  public String getLabel() {
+    return label;
+  }
+
+  public int getRank() {
+    return rank;
+  }
 }
