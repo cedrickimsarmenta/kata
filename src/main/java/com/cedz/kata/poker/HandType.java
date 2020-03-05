@@ -4,7 +4,9 @@ public enum HandType {
   //The lowest possible hand
   HIGH_CARD("High Card", "The best card is the highest card", 0),
   PAIR("Pair", "The best card is a single pair", 1),
-  TWO_PAIRS("Two Pair", "The best card are 2 pairs", 2)
+  TWO_PAIRS("Two Pair", "The best card are 2 pairs", 2),
+  TRIO("Three of a Kind", "The best card are 3 of a kind", 4)
+
   ;
 
   HandType(String name, String description, int score) {

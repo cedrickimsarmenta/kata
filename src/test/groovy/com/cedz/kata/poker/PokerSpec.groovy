@@ -21,6 +21,8 @@ class PokerSpec extends Specification {
     [HEART_2, HEART_3, HEART_4, HEART_5, SPADE_6]   || HandType.HIGH_CARD
     [HEART_2, SPADE_2, HEART_3, HEART_4, SPADE_5]   || HandType.PAIR
     [HEART_2, SPADE_2, HEART_4, HEART_4, SPADE_5]   || HandType.TWO_PAIRS
+    [HEART_2, SPADE_2, CLUBS_2, HEART_4, SPADE_5]   || HandType.TRIO
+
 
   }
 }
