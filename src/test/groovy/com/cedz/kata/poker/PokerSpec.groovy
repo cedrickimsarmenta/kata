@@ -32,6 +32,7 @@ class PokerSpec extends Specification {
     [SPADE_JACK, CLUBS_QUEEN, HEART_KING, SPADE_ACE, SPADE_2]           || HandType.HIGH_CARD                 |  Rank.ACE                     |     [SPADE_JACK, CLUBS_QUEEN, HEART_KING, SPADE_2]
     [CLUBS_QUEEN, HEART_KING, SPADE_ACE, SPADE_2, SPADE_3]              || HandType.HIGH_CARD                 |  Rank.ACE                     |     [CLUBS_QUEEN, HEART_KING, SPADE_2, SPADE_3]
     [CLUBS_QUEEN, CLUBS_KING, CLUBS_6, CLUBS_ACE, CLUBS_3]              || HandType.FLUSH                     |  Rank.ACE                     |     [CLUBS_QUEEN, CLUBS_KING, CLUBS_6, CLUBS_3]
+    [SPADE_ACE, CLUBS_2, CLUBS_3, CLUBS_4, CLUBS_5]                     || HandType.STRAIGHT                  |  Rank.FIVE                    |     null
     [HEART_QUEEN, HEART_KING, HEART_6, HEART_2, HEART_3]                || HandType.FLUSH                     |  Rank.KING                    |     [HEART_QUEEN, HEART_6, HEART_2, HEART_3]
     [HEART_QUEEN, SPADE_QUEEN, CLUBS_QUEEN, HEART_ACE, CLUBS_ACE]       ||  HandType.FULL_HOUSE               |  Rank.QUEEN                   |     null
     [HEART_QUEEN, SPADE_QUEEN, CLUBS_QUEEN, DIAMOND_QUEEN, CLUBS_ACE]   ||  HandType.FOUR_OF_A_KIND           |  Rank.QUEEN                   |     null
@@ -41,4 +42,5 @@ class PokerSpec extends Specification {
     [SPADE_10, SPADE_JACK, SPADE_QUEEN, SPADE_KING, SPADE_ACE]          ||  HandType.ROYAL_FLUSH              |  Rank.ACE                     |     null
     [HEART_10, HEART_JACK, HEART_QUEEN, HEART_KING, HEART_ACE]          ||  HandType.ROYAL_FLUSH              |  Rank.ACE                     |     null
   }
+
 }

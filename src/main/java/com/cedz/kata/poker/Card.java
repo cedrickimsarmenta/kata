@@ -43,19 +43,19 @@ public enum Card {
   SPADE_QUEEN(Suit.SPADE, Rank.QUEEN),
   SPADE_KING(Suit.SPADE, Rank.KING),
 
-  CLUBS_ACE(Suit.SPADE, Rank.ACE),
-  CLUBS_2(Suit.SPADE, Rank.TWO),
-  CLUBS_3(Suit.SPADE, Rank.THREE),
-  CLUBS_4(Suit.SPADE, Rank.FOUR),
-  CLUBS_5(Suit.SPADE, Rank.FIVE),
-  CLUBS_6(Suit.SPADE, Rank.SIX),
-  CLUBS_7(Suit.SPADE, Rank.SEVEN),
-  CLUBS_8(Suit.SPADE, Rank.EIGHT),
-  CLUBS_9(Suit.SPADE, Rank.NINE),
-  CLUBS_10(Suit.SPADE, Rank.TEN),
-  CLUBS_JACK(Suit.SPADE, Rank.JACK),
-  CLUBS_QUEEN(Suit.SPADE, Rank.QUEEN),
-  CLUBS_KING(Suit.SPADE, Rank.KING);
+  CLUBS_ACE(Suit.CLUBS, Rank.ACE),
+  CLUBS_2(Suit.CLUBS, Rank.TWO),
+  CLUBS_3(Suit.CLUBS, Rank.THREE),
+  CLUBS_4(Suit.CLUBS, Rank.FOUR),
+  CLUBS_5(Suit.CLUBS, Rank.FIVE),
+  CLUBS_6(Suit.CLUBS, Rank.SIX),
+  CLUBS_7(Suit.CLUBS, Rank.SEVEN),
+  CLUBS_8(Suit.CLUBS, Rank.EIGHT),
+  CLUBS_9(Suit.CLUBS, Rank.NINE),
+  CLUBS_10(Suit.CLUBS, Rank.TEN),
+  CLUBS_JACK(Suit.CLUBS, Rank.JACK),
+  CLUBS_QUEEN(Suit.CLUBS, Rank.QUEEN),
+  CLUBS_KING(Suit.CLUBS, Rank.KING);
 
   Card(Suit suit, Rank rank) {
     this.suit = suit;
