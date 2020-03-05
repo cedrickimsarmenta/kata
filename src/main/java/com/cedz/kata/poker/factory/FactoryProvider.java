@@ -11,6 +11,8 @@ public class FactoryProvider {
 
   static {
     FACTORY_MAP.put(HandType.HIGH_CARD, new HighCardProcessorFactory());
+    FACTORY_MAP.put(HandType.PAIR, new PairProcessorFactory());
+
   }
 
   public static HandTypeProcessorFactory getFactory(HandType handType) {

@@ -46,7 +46,12 @@ public class HandContext {
   }
 
   public List<Rank> getSortedRanksDesc() {
-    List<Rank> rankIndexes = new ArrayList<>(this.getRankCounts().keySet());
+    return sortRanksDesc(new ArrayList<>(this.getRankCounts().keySet()));
+  }
+
+
+  public List<Rank> sortRanksDesc(List<Rank> ranks) {
+    List<Rank> rankIndexes = new ArrayList<>(ranks);
 
     Collections.sort(rankIndexes, new Comparator<Rank>() {
       @Override
@@ -57,4 +62,22 @@ public class HandContext {
 
     return rankIndexes;
   }
+
+
+  /**
+   * Filters ranks by count, and, in case multiple ranks exists, sorts by the highest rank
+   * @param count
+   * @return
+   */
+  public List<Rank> filterRanksByCount(int count) {
+
+    return sortRanksDesc(this.rankCounts.entrySet().stream()
+        .filter(e->
+            e.getValue() == count
+        )
+        .map(Map.Entry::getKey)
+        .collect(Collectors.toList()));
+
+  }
+
 }

@@ -17,10 +17,11 @@ class PokerSpec extends Specification {
     hand.getHandType() == expectedHand
     hand.getCards() == cards
     hand.getHighCard() == expectedHighCard
+
     where:
     cards                                                               || expectedHand                       | expectedHighCard
     [HEART_2, HEART_3, HEART_4, HEART_5, SPADE_7]                       || HandType.HIGH_CARD                 |  Rank.SEVEN
-//    [HEART_2, SPADE_2, HEART_3, HEART_4, SPADE_5]                       || HandType.PAIR                      |  Rank.TWO
+    [HEART_2, SPADE_2, HEART_3, HEART_4, SPADE_5]                       || HandType.PAIR                      |  Rank.TWO
 //    [HEART_2, SPADE_2, HEART_4, HEART_4, SPADE_5]                       || HandType.TWO_PAIRS                 |  Rank.FOUR
 //    [HEART_2, SPADE_2, CLUBS_2, HEART_4, SPADE_5]                       || HandType.TRIO                      |  Rank.TWO
 //    [HEART_2, SPADE_3, CLUBS_4, HEART_5, SPADE_6]                       || HandType.STRAIGHT                  |  Rank.SIX
