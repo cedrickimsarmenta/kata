@@ -17,7 +17,6 @@ public class HandContext {
   private Map<Rank, Integer> rankCounts = new HashMap<>();
 
 
-
   public HandContext(List<Card> cards) {
     this.cards = cards;
 
