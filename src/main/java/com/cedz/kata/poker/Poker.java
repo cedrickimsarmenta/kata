@@ -1,6 +1,7 @@
 package com.cedz.kata.poker;
 
 import com.cedz.kata.poker.factory.FactoryProvider;
+import com.cedz.kata.poker.factory.HandComparator;
 import com.cedz.kata.poker.factory.HandTypeProcessorFactory;
 import com.cedz.kata.poker.handChecker.FlushChecker;
 import com.cedz.kata.poker.handChecker.FourOfAKindChecker;
@@ -15,10 +16,11 @@ import com.cedz.kata.poker.handChecker.StraightFlushChecker;
 import com.cedz.kata.poker.handChecker.TrioChecker;
 import com.cedz.kata.poker.handChecker.TwoPairChecker;
 import com.cedz.kata.poker.highCardCalculator.HighCardCalculator;
+import com.cedz.kata.util.CollectionUtils;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 public class Poker {
 
@@ -60,8 +62,6 @@ public class Poker {
 
       HighCardCalculator highCardCalculator = handTypeProcessorFactory.getHighCardChecker();
 
-
-
       Hand hand = new Hand(handType, cards, highCardCalculator.calculate(handContext));
 
       return hand;
@@ -69,9 +69,21 @@ public class Poker {
     return null;
   }
 
+  public static Hand bestHand(List<Card> cards, int cardsToTake) {
+    List<List<Card>> potentialHands = new ArrayList<>();
+
+    potentialHands = CollectionUtils.getAllCombinations(cards, 5);
+
+    List<Hand> hands = new ArrayList<>();
+    for(List<Card> potentialHand : potentialHands) {
+      hands.add(bestHand(potentialHand));
+    }
+
+    Collections.sort(hands, new HandComparator().reversed());
 
 
-
+    return hands.get(0);
+  }
 
 
 

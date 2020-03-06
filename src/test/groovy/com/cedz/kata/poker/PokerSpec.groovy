@@ -43,4 +43,21 @@ class PokerSpec extends Specification {
     [HEART_10, HEART_JACK, HEART_QUEEN, HEART_KING, HEART_ACE]          ||  HandType.ROYAL_FLUSH              |  Rank.ACE                     |     null
   }
 
+  @Unroll
+  def "givenPokerCards_whenBestHandWithCardsToTake_thenShouldFindBestHand"() {
+
+    when:
+    Hand hand = Poker.bestHand(cards,5);
+
+    then:
+    expectedCards.containsAll(hand.getCards())
+
+    where:
+    cards                                                                                  || expectedCards
+    [HEART_2, HEART_3, HEART_4, HEART_5,SPADE_8 ,HEART_6, HEART_7]                         || [HEART_3, HEART_4, HEART_5, HEART_6, HEART_7]
+    [HEART_2, HEART_3, HEART_4, SPADE_2,DIAMOND_2 ,DIAMOND_3, HEART_7]                     || [HEART_2, HEART_3, SPADE_2, DIAMOND_2, DIAMOND_3]
+    [HEART_2, HEART_ACE, HEART_6,HEART_5, HEART_3 ,DIAMOND_4, HEART_7]                     || [HEART_ACE, HEART_7, HEART_6, HEART_5, HEART_3]
+  }
+
+
 }
