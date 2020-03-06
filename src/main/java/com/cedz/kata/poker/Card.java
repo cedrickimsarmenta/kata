@@ -72,4 +72,13 @@ public enum Card {
   public Suit getSuit() {
     return suit;
   }
+
+  public String display() {
+    return this.suit.getDisplayText() + this.getRank().getLabel();
+  }
+
+  @Override
+  public String toString() {
+    return display();
+  }
 }

@@ -12,6 +12,11 @@ public class CollectionUtils {
     map.put(key, map.get(key) + 1);
   }
 
+  public static <T,V> void initOrAppend(Map<T, List<V>> map, T key, V value) {
+    map.putIfAbsent(key, new ArrayList<V>());
+    map.get(key).add(value);
+  }
+
   public static <K,V> V getFirstValue(Map<K,V> map) {
     return new ArrayList<V>(map.values()).get(0);
   }

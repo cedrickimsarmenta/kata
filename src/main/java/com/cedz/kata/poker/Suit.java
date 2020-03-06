@@ -13,4 +13,12 @@ public enum Suit {
 
   private String name;
   private String displayText;
+
+  public String getName() {
+    return name;
+  }
+
+  public String getDisplayText() {
+    return displayText;
+  }
 }
