@@ -19,12 +19,18 @@ public class PokerGame {
     Player joennie = new Player("Jones");
     joennie.deposit(new BigDecimal(50000));
 
+    Player alexis = new Player("Lex");
+    alexis.deposit(new BigDecimal(50000));
+
+
 
     Table table = new Table();
     table.join(cedz);
     table.join(vernie);
     table.join(levi);
     table.join(joennie);
+    table.join(alexis);
+
 
     System.out.println("WELCOME TO CEDDIE-POKER !");
     while(true) {
