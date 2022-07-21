@@ -4,14 +4,13 @@ import com.cedz.kata.sort.Sort
 import spock.lang.Specification
 import spock.lang.Unroll
 
-class QuickSort2Spec extends Specification {
-
-    private Sort quickSort2 = new QuickSort2();
+class MergeSort2Spec extends Specification{
+    private Sort sort = new MergeSort2();
 
     @Unroll
     def "GivenArray_WhenSort_ThenShouldSort" () {
         when:
-        quickSort2.sort(array);
+        sort.sort(array);
 
         then:
         array == result

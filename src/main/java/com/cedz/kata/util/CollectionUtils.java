@@ -69,4 +69,10 @@ public class CollectionUtils {
 
     return container;
   }
+
+  public static void swap(int x, int y, List<Integer> list) {
+    int temp = list.get(x);
+    list.set(x, list.get(y));
+    list.set(y, temp);
+  }
 }

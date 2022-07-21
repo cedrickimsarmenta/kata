@@ -1,6 +1,7 @@
 package com.cedz.kata.sort.v2;
 
 import com.cedz.kata.sort.Sort;
+import com.cedz.kata.util.CollectionUtils;
 
 import java.util.List;
 
@@ -29,18 +30,14 @@ public class QuickSort2 implements Sort {
         int highIndex = high;
         for (int i = high; i > low; i--) {
             if(list.get(i) > pivotElement) {
-                swap(i, highIndex, list);
+                CollectionUtils.swap(i, highIndex, list);
                 highIndex --;
             }
         }
 
-        swap(pivot, highIndex, list);
+        CollectionUtils.swap(pivot, highIndex, list);
         return highIndex;
     }
 
-    private void swap(int x, int y, List<Integer> list) {
-        int temp = list.get(x);
-        list.set(x, list.get(y));
-        list.set(y, temp);
-    }
+
 }
