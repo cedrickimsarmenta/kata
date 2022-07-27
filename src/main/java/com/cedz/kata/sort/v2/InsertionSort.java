@@ -25,4 +25,5 @@ public class InsertionSort implements Sort {
             list.set(k +1 , temp);
         }
     }
+
 }
