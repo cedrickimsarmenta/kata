@@ -13,17 +13,24 @@ public class InsertionSort implements Sort {
             return;
         }
         for (int i = 1; i < list.size(); i ++) {
-
-            int k = i-1;
-            int temp  = list.get(i);
-
-            while(k >= 0 && list.get(k) > temp) {
-                list.set(k+1, list.get(k));
-                k--;
-            }
-
-            list.set(k +1 , temp);
+            this.insertionSort(list, 1, i);
         }
     }
 
+    public static void insertionSort(List<Integer> list , int interval, int begin) {
+        int k = begin - interval;
+        int temp  = list.get(begin);
+
+        while(k >= 0 && list.get(k) > temp) {
+            list.set(k+interval, list.get(k));
+            k-= interval;
+        }
+
+        list.set(k + interval , temp);
+
+    }
+
 }
+
+
+
